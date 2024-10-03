@@ -12,7 +12,7 @@ export default function Home() {
       {/* <!-- hero section --> */}
       <div className="mb-24 flex flex-col items-center justify-between gap-12 lg:flex-row">
         <div className="lg:w-1/2">
-          <h1 className="gradient-title pb-6 text-7xl font-extrabold">
+          <h1 className="gradient-title pb-6 text-7xl font-extrabold dark:text-blue-700">
             Simplify Your Scheduling
           </h1>
           <p className="mb-10 text-xl text-gray-600">
