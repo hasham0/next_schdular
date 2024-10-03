@@ -1,16 +1,19 @@
+"use server";
 import { clerkClient, currentUser } from "@clerk/nextjs/server";
 import prisma from "./prisma";
+import { User } from "@prisma/client";
 
 const checkUser = async () => {
   const user = await currentUser();
   if (!user) return null;
   try {
-    const isUserLoggedIn = await prisma.user.findUnique({
+    const isUserLoggedIn: User | null = await prisma.user.findUnique({
       where: {
         clerkUserId: user.id,
       },
     });
     if (!isUserLoggedIn) {
+      // note: create new entry in database
       const name = `${user.firstName} ${user.lastName}`;
       await clerkClient().users.updateUser(user.id, {
         username: name.split(" ").join("-") + user.id.slice(-4),

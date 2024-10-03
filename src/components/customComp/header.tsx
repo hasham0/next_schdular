@@ -9,8 +9,7 @@ import checkUser from "@/lib/checkUser";
 
 type Props = {};
 const Header = async (props: Props) => {
-  const isUserLoggedIn = await checkUser();
-  // console.log("🚀 ~ Header ~ isUserLoggedIn:", isUserLoggedIn);
+  await checkUser();
 
   return (
     <nav className="mx-auto flex items-center justify-between border-b-2 px-4 py-2 shadow-md dark:bg-white">

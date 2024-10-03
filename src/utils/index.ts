@@ -1,9 +1,11 @@
 import {
   ArrowRight,
+  BarChart,
   Calendar,
   Clock,
   LinkIcon,
   LucideIcon,
+  Users,
 } from "lucide-react";
 
 const features: Array<{
@@ -83,5 +85,16 @@ const testimonials: Array<{
   },
 ];
 
+const navItems: Array<{
+  href: string;
+  label: string;
+  icon: LucideIcon;
+}> = [
+  { href: "/dashboard", label: "Dashboard", icon: BarChart },
+  { href: "/events", label: "Events", icon: Calendar },
+  { href: "/meetings", label: "Meetings", icon: Users },
+  { href: "/availability", label: "Availability", icon: Clock },
+];
+
 // expot from here
-export { features, howItWorks, testimonials };
+export { features, howItWorks, testimonials, navItems };
