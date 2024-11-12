@@ -5,6 +5,7 @@ import { User } from "@prisma/client";
 
 const checkUser = async () => {
   const user = await currentUser();
+
   if (!user) return null;
   try {
     const isUserLoggedIn: User | null = await prisma.user.findUnique({

@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useUser } from "@clerk/nextjs";
 import { useForm } from "react-hook-form";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -9,10 +9,13 @@ import { Button } from "@/components/ui/button";
 import { BarLoader } from "react-spinners";
 import { usernameSchema, usernameSchemaTS } from "@/lib/validator";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { updateUsername, UpdateUsernameResponse } from "@/actions/users";
 
 type Props = {};
 
 function dashboardPage({}: Props) {
+  const [origin, setOrigin] = useState<string>("");
+
   const { user, isLoaded } = useUser();
   const {
     register,
@@ -22,14 +25,31 @@ function dashboardPage({}: Props) {
   } = useForm<usernameSchemaTS>({
     resolver: zodResolver(usernameSchema),
   });
-  const { isLoading, isError, data, error } = useQuery({
-    queryKey: ["username"],
-    queryFn: () => {},
+
+  useEffect(() => {
+    if (!user?.username) return;
+    return setValue("username", user?.username);
+  }, [isLoaded]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setOrigin(window.location.origin);
+    }
+  }, []);
+
+  const { mutate, isError, isPending, error } = useMutation<
+    UpdateUsernameResponse,
+    Error,
+    string
+  >({
+    mutationKey: ["username"],
+    mutationFn: (username) => updateUsername(username),
   });
 
   const onSubmit = async (data: usernameSchemaTS) => {
-    //    await fnUpdateUsername(data.username);
+    mutate(data.username);
   };
+
   return (
     <div>
       <div className="space-y-8">
@@ -73,7 +93,7 @@ function dashboardPage({}: Props) {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <div className="flex items-center gap-2">
-                  <span>{window?.location.origin}/</span>
+                  <p>{origin}/</p>
                   <Input {...register("username")} placeholder="username" />
                 </div>
                 {errors.username && (
@@ -85,10 +105,10 @@ function dashboardPage({}: Props) {
                   <p className="mt-1 text-sm text-red-500">{error?.message}</p>
                 )}
               </div>
-              {isLoading && (
+              {isPending && (
                 <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />
               )}
-              <Button type="submit" disabled={isLoading}>
+              <Button type="submit" disabled={isPending}>
                 Update Username
               </Button>
             </form>
