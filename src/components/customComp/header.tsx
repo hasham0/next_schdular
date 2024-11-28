@@ -9,7 +9,7 @@ import checkUser from "@/lib/checkUser";
 
 type Props = {};
 const Header = async (props: Props) => {
-  const ss = await checkUser();
+  await checkUser();
 
   return (
     <nav className="z-20 mx-auto flex items-center justify-between border-b-2 px-4 py-2 shadow-md dark:bg-white">

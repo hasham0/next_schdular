@@ -18,7 +18,7 @@ export default function MainLayout({
     <BarLoader width={"100%"} height={"100%"} />;
   }
   return (
-    <section>
+    <div>
       <div className="flex h-screen flex-col bg-blue-50 md:flex-row">
         {/* Sidebar for medium screens and up */}
         <aside className="hidden w-64 bg-white md:block">
@@ -71,6 +71,6 @@ export default function MainLayout({
           </ul>
         </nav>
       </div>
-    </section>
+    </div>
   );
 }

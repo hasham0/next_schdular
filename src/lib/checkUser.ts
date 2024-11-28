@@ -31,7 +31,7 @@ const checkUser = async () => {
     }
     return isUserLoggedIn;
   } catch (error) {
-    console.error("🚀 ~ checkUser ~ error:", error);
+    console.error("🚀 ~ checkUser ~ error => ", error);
   }
 };
 

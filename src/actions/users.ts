@@ -2,42 +2,54 @@
 
 import prisma from "@/database/prisma";
 import { auth, clerkClient } from "@clerk/nextjs/server";
-export type UpdateUsernameResponse = { success: boolean };
+
+export type UpdateUsernameResponse = { message: string; success: boolean };
 
 export async function updateUsername(
   username: string,
 ): Promise<UpdateUsernameResponse> {
-  console.log("🚀 ~ updateUsername ~ username:", username);
-  //   const { userId } = auth();
-  //   if (!userId) {
-  //     throw new Error("Unauthorized");
-  //   }
-  //   const isExistingUsernameValid = await prisma.user.findUnique({
-  //     where: {
-  //       username,
-  //     },
-  //   });
+  try {
+    const { userId } = auth();
+    // TODO: is user exist
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
 
-  //   if (isExistingUsernameValid && isExistingUsernameValid.id !== userId) {
-  //     throw new Error("Username is  already taken");
-  //   }
+    // TODO: is username valid
+    const isExistingUsernameValid = await prisma.user.findUnique({
+      where: {
+        username,
+      },
+    });
 
-  //   // update in database
-  //   await prisma.user.update({
-  //     where: {
-  //       clerkUserId: userId,
-  //     },
-  //     data: {
-  //       username,
-  //     },
-  //   });
+    if (isExistingUsernameValid && isExistingUsernameValid.id !== userId) {
+      throw new Error("Username is  already taken");
+    }
 
-  //   // update in clerk client
-  //   await clerkClient.users.updateUser(userId, {
-  //     username,
-  //   });
+    //TODO: update in database
+    await prisma.user.update({
+      where: {
+        clerkUserId: userId,
+      },
+      data: {
+        username,
+      },
+    });
 
-  return {
-    success: true,
-  };
+    //TODO: update in clerk client
+    await clerkClient().users.updateUser(userId, {
+      username,
+    });
+
+    return {
+      message: "username is valid",
+      success: true,
+    };
+  } catch (error) {
+    const errMsg = (error as unknown as { message: string }).message;
+    return {
+      message: errMsg,
+      success: false,
+    };
+  }
 }

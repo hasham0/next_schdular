@@ -6,8 +6,8 @@ export const usernameSchema = z.object({
     .min(3)
     .max(20)
     .regex(
-      /^[a-zA-Z0-9_]+$/,
-      "Username can only contain letters, numbers, and underscores",
+      /^[a-zA-Z0-9_-]+$/,
+      "Username can only contain letters, numbers, underscores, and hyphens",
     ),
 });
 

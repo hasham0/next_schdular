@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useUser } from "@clerk/nextjs";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -14,9 +14,9 @@ import { updateUsername, UpdateUsernameResponse } from "@/actions/users";
 type Props = {};
 
 function dashboardPage({}: Props) {
+  const { user, isLoaded } = useUser();
   const [origin, setOrigin] = useState<string>("");
 
-  const { user, isLoaded } = useUser();
   const {
     register,
     handleSubmit,
@@ -37,17 +37,23 @@ function dashboardPage({}: Props) {
     }
   }, []);
 
-  const { mutate, isError, isPending, error } = useMutation<
-    UpdateUsernameResponse,
-    Error,
-    string
-  >({
+  const {
+    mutate,
+    data: userData,
+    isError,
+    isPending,
+    error,
+  } = useMutation<UpdateUsernameResponse, Error, string>({
     mutationKey: ["username"],
     mutationFn: (username) => updateUsername(username),
   });
 
-  const onSubmit = async (data: usernameSchemaTS) => {
-    mutate(data.username);
+  const onSubmit: SubmitHandler<usernameSchemaTS> = async (data) => {
+    const d = mutate(data.username);
+    console.log(
+      "🚀 ~ constonSubmit:SubmitHandler<usernameSchemaTS>= ~ d:",
+      userData,
+    );
   };
 
   return (
