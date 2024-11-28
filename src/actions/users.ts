@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "@/lib/prisma";
+import prisma from "@/database/prisma";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 export type UpdateUsernameResponse = { success: boolean };
 

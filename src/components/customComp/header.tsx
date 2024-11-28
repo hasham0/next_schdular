@@ -9,10 +9,10 @@ import checkUser from "@/lib/checkUser";
 
 type Props = {};
 const Header = async (props: Props) => {
-  await checkUser();
+  const ss = await checkUser();
 
   return (
-    <nav className="mx-auto flex items-center justify-between border-b-2 px-4 py-2 shadow-md dark:bg-white">
+    <nav className="z-20 mx-auto flex items-center justify-between border-b-2 px-4 py-2 shadow-md dark:bg-white">
       {/* <!-- logo --> */}
       <Link href={"/"} className="flex items-center">
         <Image
@@ -36,7 +36,7 @@ const Header = async (props: Props) => {
           </Button>
         </Link>
         <SignedOut>
-          <SignInButton forceRedirectUrl={"/dashboard"}>
+          <SignInButton mode="modal" forceRedirectUrl={"/dashboard"}>
             <Button variant={"outline"}>Login</Button>
           </SignInButton>
         </SignedOut>

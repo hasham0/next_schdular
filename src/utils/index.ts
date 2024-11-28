@@ -1,5 +1,4 @@
 import {
-  ArrowRight,
   BarChart,
   Calendar,
   Clock,

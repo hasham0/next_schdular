@@ -15,7 +15,7 @@ export default function Home() {
           <h1 className="gradient-title pb-6 text-7xl font-extrabold dark:text-blue-700">
             Simplify Your Scheduling
           </h1>
-          <p className="mb-10 text-xl text-gray-600">
+          <p className="mb-10 text-xl text-gray-600 dark:text-white">
             Schedulrr helps you manage your time effectively. Create events, set
             your availability, and let others book time with you seamlessly.
           </p>
@@ -52,7 +52,7 @@ export default function Home() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-center text-gray-600">
+                <p className="text-center text-gray-600 dark:text-white">
                   {feature.description}
                 </p>
               </CardContent>
@@ -80,8 +80,12 @@ export default function Home() {
                   {index + 1}
                 </span>
               </div>
-              <h3 className="mb-2 text-lg font-semibold">{step.step}</h3>
-              <p className="text-gray-600">{step.description}</p>
+              <h3 className="mb-2 text-lg font-semibold dark:text-blue-600">
+                {step.step}
+              </h3>
+              <p className="text-gray-600 dark:text-white">
+                {step.description}
+              </p>
             </div>
           ))}
         </div>

@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { BarLoader } from "react-spinners";
-import { usernameSchema, usernameSchemaTS } from "@/lib/validator";
+import { usernameSchema, usernameSchemaTS } from "@/validations/validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUsername, UpdateUsernameResponse } from "@/actions/users";
 

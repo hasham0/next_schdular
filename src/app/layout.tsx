@@ -5,7 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/customComp/header";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { cn } from "@/lib/utils";
-import Providers from "@/providers/query-provider";
+import QueryProvider from "@/providers/query-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
+    <QueryProvider>
       <ClerkProvider>
         <html lang="en" suppressHydrationWarning>
           <body
@@ -45,8 +45,8 @@ export default function RootLayout({
               <header>
                 <Header />
               </header>
-              <main className="dark:to-black/ min-h-screen bg-gradient-to-b from-blue-50 to-white dark:bg-gradient-to-b dark:from-black/60">
-                {/* children */}
+              {/* children */}
+              <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:bg-gradient-to-b dark:from-black/60 dark:to-black">
                 {children}
               </main>
               {/* footer */}
@@ -61,6 +61,6 @@ export default function RootLayout({
           </body>
         </html>
       </ClerkProvider>
-    </Providers>
+    </QueryProvider>
   );
 }
